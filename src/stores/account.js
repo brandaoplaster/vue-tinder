@@ -1,3 +1,5 @@
+import AccountService from '../services/account_service';
+
 export default {
   state: {
     account: ""
@@ -20,6 +22,12 @@ export default {
   },
 
   actions: {
+    login(context, { email, password }) {
+      AccountService.login(email, password).then(user => {
+        context.commit("performLogin", user)
+      })
+    },
+
     loadLocalAccount(context) {
       context.commit("loadLocalAccount");
     } 
