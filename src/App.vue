@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    comments: {
+    components: {
       Navbar: () => import('@/components/Navbar'),
       Alert: () => import('@/componentes/Alert'),
     }
