@@ -29,8 +29,8 @@ export default {
     },
 
     loadLocalAccount(context) {
-      context.commit("loadLocalAccount");
-    } 
+      context.commit("loadLocalStorageAccount");
+    }
   },
 
   getters: {

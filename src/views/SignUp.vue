@@ -47,7 +47,7 @@
 
 import AccountService from '../services/account_service';
 import router from '../router';
-import store from '../store';
+import store from '../stores';
 
 export default {
   data() {
