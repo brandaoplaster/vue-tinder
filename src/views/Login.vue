@@ -34,7 +34,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import store from '../store';
+import store from '../stores';
 import router from '../router';
 
 export default {
