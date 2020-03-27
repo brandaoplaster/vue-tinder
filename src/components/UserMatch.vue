@@ -29,6 +29,23 @@
           </h4>
         </div>
       </div>
+
+      <footer class="footer">
+        <div class="columns is-mobile has-text-centered like-buttons">
+          <div class="column is-6">
+            <button class="button has-background-grey-light is-large" @click="like(false)">
+              <i class="fas fa-times has-text-white"></i>
+            </button>
+          </div>
+
+          <div class="column is-6">
+            <button class="button has-background-danger is-large" @click="like(true)">
+              <i class="fas fa-heart has-text-white"></i>
+            </button>
+          </div>
+        </div>
+      </footer>
+
     </div>
   </div>
 </template>
@@ -44,16 +61,47 @@
       margin-top: 0.5rem;
     }
   }
+
+  footer {
+    background: transparent;
+    margin-top: 5rem;
+
+    @media screen and (min-width: 490px) and (max-width: 550px) {
+      margin-top: 2.5rem;
+    }
+
+    @media screen and (min-width: 550px) and (max-width: 620px) {
+      margin-top: -2rem;
+    }
+
+    @media screen and (min-width: 621px) {
+      margin-top: -4rem;
+    }
+  }
+
+  div.like-button {
+    button {
+      border-radius: 9999px;
+      padding: 0;
+      height: 3.5rem;
+      width: 3.5rem;
+    }
+  }
+
 </style>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
   export default {
-      computed: {
-        ...mapState('Match', {
-          user: state => state.currentSelection
-        })
-      },
+    computed: {
+      ...mapState('Match', {
+        user: state => state.currentSelection
+      })
+    },
+
+    methods: {
+      ...mapActions('Match', ['like'])
+    }
   }
 </script>

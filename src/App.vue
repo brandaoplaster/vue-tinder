@@ -10,7 +10,7 @@
 export default {
     components: {
       Navbar: () => import('@/components/Navbar'),
-      Alert: () => import('@/componentes/Alert'),
+      Alert: () => import('@/components/Alert'),
     }
 }
 </script>

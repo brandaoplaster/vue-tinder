@@ -6,7 +6,8 @@ export default {
   state: {
     selectionList: [],
     currentSelection: null,
-    loading: false
+    loading: false,
+    likePerformed: false
   },
 
   mutations: {
@@ -21,6 +22,10 @@ export default {
     setCurrentSelection(state, position) {
       status.currentSelection = status.selectionList[position];
     },
+
+    setLike(state) {
+      state.likePerformed = true;
+    }
   },
 
   actions: {
@@ -36,6 +41,13 @@ export default {
 
     setCurrentSelection(context, position) {
       context.commit("setCurrentSelection", position);
-    }
+    },
+
+    like({ commit, state }, liked) {
+      MatchService.like(state.currentSelection.id, liked).then(() => {
+        commit("setLike");
+      })
+    },
+    
   }
 }
