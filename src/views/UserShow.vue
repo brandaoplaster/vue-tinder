@@ -9,7 +9,7 @@
 
       <div v-if="isLoggedUser" class="columns is-mobile is-gapless is-centered action-buttons">
         <div class="column is-12">
-          <router-link  to="/profile/edit" class="button is-pulled-left is-info">
+          <router-link to="/profile/edit" class="button is-pulled-left is-info">
             <i class="fas fa-edit"></i>
           </router-link>
         </div>
@@ -45,11 +45,11 @@
         </div>
 
         <div v-if="currentUser.distance" class="column is-4 distance">
-          <h4 class="has-right is-size-6">
+          <h4 class="has-text-right is-size-6">
             <strong class="has-text-danger">
-              {{ currentUser.distance }} km
-              <i class="fas fa-map-market-alt has-text-grey"></i>
+              {{ currentUser.distance }}km
             </strong>
+            <i class="fas fa-map-marker-alt has-text-grey"></i>
           </h4>
         </div>
 
@@ -72,7 +72,7 @@
   div.action-buttons {
     margin-top: -2rem;
     position: absolute;
-    z-index: 9999;
+    z-index: 999999;
     width: 100%;
 
     button, a {
@@ -98,13 +98,14 @@
 </style>
 
 <script>
-import "swiper/dist/css/swiper.css";
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
-import { mapState } from 'vuex';
-import router from '../router';
+  import "swiper/dist/css/swiper.css";
+  import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  import { mapState } from 'vuex';
+  import router from '../router';
+  import UserService from '../services/user_service';
 
   export default {
-    comments: {
+    components: {
       swiper,
       swiperSlide
     },
@@ -122,21 +123,35 @@ import router from '../router';
       })
     },
 
-    watch: {
-      $router (to, from) {
-        if (!this.user) {
-          console.log();
+    watch:{
+      $route (to, from){
+        if(!this.user) {
+          this.loadLoggedUser();
         } else {
           this.currentUser = this.user;
         }
       }
     },
 
-    methods: {
-      backToPreviousPage() {
-        router.go(-1);
+    mounted() {
+      if(!this.user) {
+        this.loadLoggedUser();
+      } else {
+        this.currentUser = this.user;
       }
     },
 
+    methods: {
+      loadLoggedUser() {
+        UserService.load(this.account.id).then(user => {
+          this.currentUser = user;
+          this.isLoggedUser = true;
+        });
+      },
+
+      backToPreviousPage() {
+        router.go(-1);
+      }
+    }
   }
 </script>
