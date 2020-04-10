@@ -30,6 +30,13 @@ const router = new Router({
     {
       path: '/user',
       name: 'user',
+      props: true,
+      component: UserShow
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      props: true,
       component: UserShow
     },
     {

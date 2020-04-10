@@ -1,6 +1,12 @@
 <template>
   <div>
     <div>
+      <div class="info-button">
+        <button class="button is-pulled-left" @click="goToUserInfo()">
+          <i class="fas fa-info fa-xs"></i>
+        </button>
+      </div>
+
       <div class="has-text-centered">
         <img :src="user.default_photo_url" />
       </div>
@@ -85,6 +91,20 @@
       padding: 0;
       height: 3.5rem;
       width: 3.5rem;
+    }
+  }
+
+  div.info-button {
+    position: absolute;
+    z-index: 9999;
+    top: 0.5rem;
+    right: 0.5rem;
+
+    button {
+      border-radius: 9999px;
+      height: 1.6rem;
+      width: 1.7rem;
+      opacity: 0.8;
     }
   }
 
