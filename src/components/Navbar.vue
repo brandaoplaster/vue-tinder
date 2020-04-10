@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="columns is-mobile" v-if="loggedIn">
-      <navbar-item path="/user" icon="user" />
+      <navbar-item path="/profile" icon="user" />
       <navbar-item path="/" icon="fire" />
       <navbar-item path="/chat" icon="comments" />
     </div>
