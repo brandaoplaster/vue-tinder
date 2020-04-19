@@ -44,6 +44,7 @@
 
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
+import PhotoService from '../services/photo_service';
 
   export default {
     data: () => ({
@@ -65,13 +66,17 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper';
     },
 
     mounted() {
-
+      PhotoService.load().then(photos => {
+        this.photos = photos
+      });
     },
 
     watch: {
       photoToUpload(newValue) {
         if(newValue) {
-          //
+          PhotoService.add(newValue).then(photo => {
+            this.photos.add(photo);
+          });
         }
       }
     },
@@ -87,11 +92,20 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper';
       },
 
       setAsDefault() {
-
+        PhotoService.setAsDefault(this.currentPhoto).then(() => {
+          let defaultPhoto = this.photos.find(photo => { return photo.default });
+          if(defaultPhoto) defaultPhoto.default = false;
+          this.currentPhoto.default = true;
+          this.closeMenu();
+        });
       },
 
       remove() {
-
+        PhotoService.remove(this.currentPhoto).then(() => {
+          let indexToRemove = this.photos.indexOf(this.currentPhoto);
+          this.photos.slice(indexToRemove);
+          this.closeMenu();
+        });
       }
     }
   }
