@@ -23,5 +23,10 @@ export default {
         description: description
       }}, { headers: headers });
     return response.data;
+  },
+
+  async setGeolocation(id, lat, long) {
+    let response = await axios.patch(`users/${id}`, { user: { latitude: lat, longitude: long } }, { headers: store.getters['accountHeaders'] })
+    return response.data;
   }
 }
