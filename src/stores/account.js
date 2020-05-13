@@ -71,6 +71,10 @@ export default {
       return { 'X-User-Email': state.account.email, 'X-User-Token': state.account.authentication_token }
     },
 
+    accountToken(state) {
+      return state.account.authentication_token;
+    },
+
     isGeolocationEnabled(state) {
       return state.geolocationEnabled;
     }
