@@ -49,7 +49,7 @@ export default {
   actions: {
     login(context, { email, password }) {
       AccountService.login(email, password).then(user => {
-        context.commit("performLogin", user)
+        context.commit("performLogin", { email, password })
       })
     },
 
@@ -63,11 +63,8 @@ export default {
       })
     },
 
-    loadGeolocation({ commit, state }) {
-      navigator.geolocation.getCurrentPosition(data => {
-        commit("setGeolocation");
-        AccountService.setGeolocation(state.id, data.coords.latitude, data.coords.longitude);
-      });
+    loadGeolocation(context) {
+      context.commit("loadGeolocation");
     }
   },
 
