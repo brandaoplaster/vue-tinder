@@ -11,9 +11,11 @@ export default {
   },
 
   mutations: {
-    performLogin(state, user) {
-      state.account = user;
-      localStorage.setItem('account', JSON.stringify(user));
+    performLogin(state, { email, password }) {
+      AccountService.login(email, password).then(response => {
+        state.account = response;  
+        localStorage.setItem('account', JSON.stringify(response));
+      });
     },
 
     loadLocalStorageAccount(state) {
@@ -25,15 +27,22 @@ export default {
       }
     },
 
-    update(state, user) {
-      user.authentication_token = state.account.authentication_token;
-      user.email = state.account.email;
-      state.account = user;
-      localStorage.setItem('account', JSON.stringify(user));
+    update(state, { name, college, company, description }) {
+      AccountService.update(state.account.id, name, college, company, description).then(response => {
+        response.authentication_token = state.account.authentication_token;
+        response.email = state.account.email;
+        state.account = response;
+        localStorage.setItem('account', JSON.stringify(response));
+      });
     },
 
-    setGeolocation(state) {
-      state.geolocationEnabled = true;
+    loadGeolocation(state) {
+      navigator.geolocation.getCurrentPosition(data => {
+        state.coordinates.lat = data.coords.latitude;
+        state.coordinates.lon = data.coords.longitude;
+        state.geolocationEnabled = true;
+        AccountService.setGeolocation(state.account.id, data.coords.latitude, data.coords.longitude);
+      });
     }
   },
 
