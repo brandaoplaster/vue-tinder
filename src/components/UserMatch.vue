@@ -112,6 +112,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import router from '../router';
 
   export default {
     computed: {
@@ -121,6 +122,9 @@ import { mapState, mapActions } from 'vuex';
     },
 
     methods: {
+      goToUserInfo() {
+        router.push({ name: "user", params: { user: this.user } })
+      },
       ...mapActions('Match', ['like'])
     }
   }
