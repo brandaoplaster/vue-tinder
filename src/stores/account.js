@@ -5,7 +5,7 @@ export default {
     account: "",
     coordinates: {
       lat: 0,
-      long: 0
+      lon: 0
     },
     geolocationEnabled: false
   },
@@ -13,7 +13,7 @@ export default {
   mutations: {
     performLogin(state, { email, password }) {
       AccountService.login(email, password).then(response => {
-        state.account = response;  
+        state.account = response;
         localStorage.setItem('account', JSON.stringify(response));
       });
     },
@@ -48,19 +48,15 @@ export default {
 
   actions: {
     login(context, { email, password }) {
-      AccountService.login(email, password).then(user => {
-        context.commit("performLogin", { email, password })
-      })
+      context.commit("performLogin", { email, password })
     },
 
     loadLocalAccount(context) {
       context.commit("loadLocalStorageAccount");
     },
 
-    updateAccount({ commit, state }, { name, college, company, description }) {
-      AccountService.update(state.account.id, name, college, company, description),then(user => {
-        commit("update", user);
-      })
+    updateAccount(context, { name, college, company, description }) {
+      context.commit("update", { name, college, company, description });
     },
 
     loadGeolocation(context) {
