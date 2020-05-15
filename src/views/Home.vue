@@ -49,7 +49,7 @@ export default {
   computed: {
     ...mapState('Match', ['selectionList', 'loading', 'currentSelection', 'likePerformed'])
   },
- 
+
   watch: {
     loading(newValue) {
       if(!newValue) this.setCurrentSelection(0);
@@ -57,7 +57,7 @@ export default {
 
     likePerformed(newValue) {
       if(newValue) this.changeCurrentSelection();
-    }
+    },
   },
  
   methods: {
