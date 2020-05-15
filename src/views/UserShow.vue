@@ -98,7 +98,7 @@
 </style>
 
 <script>
-  import "swiper/dist/css/swiper.css";
+  import "swiper/css/swiper.css";
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
   import { mapState } from 'vuex';
   import router from '../router';
@@ -124,7 +124,7 @@
     },
 
     watch:{
-      $route (to, from){
+      $route (){
         if(!this.user) {
           this.loadLoggedUser();
         } else {
