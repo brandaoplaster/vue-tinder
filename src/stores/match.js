@@ -12,7 +12,8 @@ export default {
 
   mutations: {
     setSelectionList(state, users) {
-      state.selectionList.push(...users);
+      state.selectionList = users;
+      state.page += 1;
     },
 
     setLoading(state, status) {
@@ -20,7 +21,8 @@ export default {
     },
 
     setCurrentSelection(state, position) {
-      status.currentSelection = status.selectionList[position];
+      state.currentSelection = state.selectionList[position];
+      state.likePerformed = false;
     },
 
     setLike(state) {
