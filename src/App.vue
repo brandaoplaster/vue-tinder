@@ -1,32 +1,57 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <navbar />
+    <alert />
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import router from './router';
 
-#nav {
-  padding: 30px;
+export default {
+  components: {
+    Navbar: () => import('@/components/Navbar'),
+    Alert: () => import('@/components/Alert'),
+  },
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  channels: {
+    MatchNotificationChannel: {
+      received(data) {
+        this.alert({ type: 'success', message: data['message'] });
+      }
+    }
+  },
 
-    &.router-link-exact-active {
-      color: #42b983;
+  computed: {
+    ...mapGetters(['isGeolocationEnabled', 'accountToken'])
+  },
+
+  watch: {
+    isGeolocationEnabled(newValue) {
+      if(newValue) router.push('/');
+    },
+
+    accountToken(newValue) {
+      this.performConnectionBasedOnToken(newValue);
+    }
+  },
+
+  mounted() {
+    this.performConnectionBasedOnToken(this.accountToken);
+  },
+
+  methods: {
+    ...mapActions('Notification', ['alert']),
+
+    performConnectionBasedOnToken(token) {
+      if (token) {
+        this.$cable.subscribe({ channel: 'MatchNotificationChannel', token: token });
+      } else {
+        this.$cable.unsubscribe('MatchNotificationChannel');
+      }
     }
   }
 }
-</style>
+</script>
